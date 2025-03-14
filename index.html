@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Baby!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('https://source.unsplash.com/1600x900/?luxury,elegant') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(255, 64, 129, 0.4);
+            max-width: 420px;
+            margin: auto;
+            color: #333;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff4081;
+            font-size: 30px;
+            text-shadow: 2px 2px 10px rgba(255, 64, 129, 0.5);
+        }
+
+        .options label {
+            display: block;
+            margin: 12px 0;
+            font-size: 17px;
+            color: #ff4081;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 12px;
+            border: 2px solid #ff69b4;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff4081;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ff2666;
+            transform: scale(1.05);
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎉 It's your Birthday soon, Baby!! 🎂</h1>
+        <p>I want to make your day extra special! Choose what you'd like for your birthday. 🎁💖</p>
+
+        <form id="giftForm">
+            <div class="options">
+                <label><input type="radio" name="gift" value="Cockapoo" required> Cockapoo 🐕‍🦺</label>
+                <label><input type="radio" name="gift" value="Holiday"> Getaway to Samburu, Watamu, Amboseli, Zanzibar? 🍍🌴🦩🍹</label>
+                <label><input type="radio" name="gift" value="Dyson"> Dyson 💕</label>
+                <label><input type="radio" name="gift" value="Skin Care"> Skin Care Package (Your Choice) 🧴</label>
+                <label><input type="radio" name="gift" value="Other" id="otherOption"> Other❓</label>
+                <input type="text" id="otherGift" name="otherGift" placeholder="Type your gift" class="hidden">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <p id="responseMessage" class="hidden">Thank you! Your response has been saved my beautiful lady. 💖</p>
+
+        <h3>📋 See Your Saved Response</h3>
+        <p id="savedResponse"></p>
+    </div>
+
+    <script>
+    document.getElementById('giftForm').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const selectedGift = document.querySelector('input[name="gift"]:checked');
+        if (!selectedGift) {
+            alert("Please select a gift option.");
+            return;
+        }
+
+        const giftValue = selectedGift.value;
+        const otherGift = document.getElementById('otherGift').value.trim();
+        const finalGift = giftValue === "Other" ? otherGift : giftValue;
+
+        if (finalGift === "") {
+            alert("Please specify your gift choice.");
+            return;
+        }
+
+        // Save response in Local Storage
+        localStorage.setItem("birthdayGift", finalGift);
+
+        // Show confirmation message
+        document.getElementById('responseMessage').classList.remove('hidden');
+        document.getElementById('giftForm').reset();
+
+        // Show the saved response
+        document.getElementById('savedResponse').textContent = "🎁 Saved Choice: " + finalGift;
+    });
+
+    // Clears the saved response every time the page refreshes
+    document.addEventListener("DOMContentLoaded", function() {
+        localStorage.removeItem("birthdayGift"); // Remove stored data
+        document.getElementById('savedResponse').textContent = ""; // Clear displayed response
+    });
+
+    document.getElementById('otherOption').addEventListener('change', function() {
+        document.getElementById('otherGift').classList.toggle('hidden', !this.checked);
+    });
+</script>
+
+
+</body>
+</html>
